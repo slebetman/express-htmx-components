@@ -1,0 +1,17 @@
+{
+  "name": "express-htmx-components",
+  "version": "1.0.0",
+  "description": "Simple htmx component server for Express/Connect",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "find": "^0.3.0"
+  },
+  "peerDependencies": {
+    "express": ">= 4.0.0"
+  },
+  "author": "slebetman@gmail.com",
+  "license": "BSD-2-Clause"
+}

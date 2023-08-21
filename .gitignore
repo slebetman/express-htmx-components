@@ -1,0 +1,7 @@
+node_modules
+package-lock.json
+sessions
+config.json
+sample.db
+.vscode
+.DS_Store
