@@ -1,7 +1,7 @@
 {
   "name": "express-htmx-components",
-  "version": "1.0.0",
-  "description": "Simple htmx component server for Express/Connect",
+  "version": "0.0.1",
+  "description": "Simple htmx component server for Express",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
