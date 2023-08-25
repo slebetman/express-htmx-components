@@ -152,7 +152,7 @@ const home = component.get('/',({ session }) => {
         <h1>Welcome to HTMX</h1>
 
         $${ name.html({ session }) }
-    `
+    `;
 })
 
 module.exports = { home };
