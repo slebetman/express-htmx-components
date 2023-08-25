@@ -1,6 +1,6 @@
 {
   "name": "express-htmx-components",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Simple htmx component server for Express",
   "main": "main.js",
   "scripts": {
@@ -11,6 +11,10 @@
   },
   "peerDependencies": {
     "express": ">= 4.0.0"
+  },
+  "repository": {
+    "url": "https://github.com/slebetman/express-htmx-components",
+    "type": "git"
   },
   "author": "slebetman@gmail.com",
   "license": "BSD-2-Clause"
