@@ -164,7 +164,7 @@ let the component's own internal logic handle how to display the name.
 
 We use a special substitution with `$${}` instead of the regular `${}` because
 the component returns html. The `html` tag escapes special characters such as
-`<` and `>` with `&lt;` and `&gt;` in order to prevetn XSS attacks from html
+`<` and `>` with `&lt;` and `&gt;` in order to prevent XSS attacks from html
 content in user submitted data. But this interferes with including components
 into your html string. To overcome this the `html` tag implements a special
 `$${}` substitution that does not do any replacement of special characters.
