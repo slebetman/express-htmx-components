@@ -30,7 +30,7 @@ Here's an example of a simple counter component:
 
 ```js
 const counter = component.get('/counter',({ id, count }) => {
-    return `
+    return html`
     <div id="count-${id}">
         <h3>${count}</h3>
         <button hx-get="/counter/incr?id=${id}&count=${count}"
