@@ -122,9 +122,9 @@ const name = component.get('/name', ({ session, name }) => {
             </div>
         `;
     }
-
-    module.exports = { name }
 })
+
+module.exports = { name }
 ```
 
 This component simply returns a div and the content of that div depends
