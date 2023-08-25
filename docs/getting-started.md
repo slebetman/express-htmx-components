@@ -48,15 +48,15 @@ app.disable('x-powered-by');
 app.enable('trust proxy');
 
 app.use(
-	session({
-		secret: SESSION_SECRET,
-		resave: true,
-		saveUninitialized: true,
-		cookie: {
-			secure: false,
-			httpOnly: true,
-		},
-	})
+    session({
+        secret: SESSION_SECRET,
+        resave: true,
+        saveUninitialized: true,
+        cookie: {
+            secure: false,
+            httpOnly: true,
+        },
+    })
 );
 
 app.use('/static', express.static('static'));
@@ -64,15 +64,15 @@ app.use(express.urlencoded({ extended: false }));
 
 // Auto-load components:
 components.init(app, COMPONENTS_DIR).then(() => {
-	app.use((req, res) => {
-		console.log('404: Not Found');
-		res.status(404);
-		res.send('404: Not Found.');
-	})
+    app.use((req, res) => {
+        console.log('404: Not Found');
+        res.status(404);
+        res.send('404: Not Found.');
+    })
 
-	app.listen(PORT, () => {
-		console.log(`Server started, listening on ${PORT} ..`
-	});
+    app.listen(PORT, () => {
+        console.log(`Server started, listening on ${PORT} ..`
+    });
 });
 ```
 
@@ -96,34 +96,34 @@ const component = require('express-htmx-components');
 const { html } = require('express-htmx-components/tags');
 
 const name = component.get('/name', ({ session, name }) => {
-	if (name) {
-		session.name = name;
-	}
+    if (name) {
+        session.name = name;
+    }
 
-	if (session.name) {
-		return html`
-			<div id="name-container">
-				Hello <span class="name">${session.name}</span>!
-			</div>
-		`;
-	}
-	else {
-		return html`
-			<div id="name-container">
-				<form
-					hx-get="/name"
-					hx-target="#name-container"
-					hx-swap="outerHTML"
-				>
-					What's your name?
-					<input name="name" id="name" type="text">
-					<button type="submit">Submit</button>
-				</form>
-			</div>
-		`;
-	}
+    if (session.name) {
+        return html`
+            <div id="name-container">
+                Hello <span class="name">${session.name}</span>!
+            </div>
+        `;
+    }
+    else {
+        return html`
+            <div id="name-container">
+                <form
+                    hx-get="/name"
+                    hx-target="#name-container"
+                    hx-swap="outerHTML"
+                >
+                    What's your name?
+                    <input name="name" id="name" type="text">
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        `;
+    }
 
-	module.exports = { name }
+    module.exports = { name }
 })
 ```
 
@@ -148,11 +148,11 @@ const { html } = require('express-htmx-components/tags');
 const { name } = require('./lib/name');
 
 const home = component.get('/',({ session }) => {
-	return html`
-		<h1>Welcome to HTMX</h1>
+    return html`
+        <h1>Welcome to HTMX</h1>
 
-		$${ name.html({ session }) }
-	`
+        $${ name.html({ session }) }
+    `
 })
 
 module.exports = { home };
