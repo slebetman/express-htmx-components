@@ -25,8 +25,25 @@ function htmx(body) {
 }
 
 /**
+ * @callback ComponentFunction
+ * @param {Object} props
+ */
+
+/**
+ * @typedef {Object} Component
+ * @property {express.Router} route
+ * @property {ComponentFunction} html
+ */
+
+/**
+ * @typedef {Object} PrivateComponent
+ * @property {ComponentFunction} html
+ */
+
+/**
  * @callback ComponentDefinition
  * @param {Object} props
+ * @returns {string}
  */
 
 /**
@@ -38,6 +55,7 @@ function htmx(body) {
 
 /**
  * @param {ComponentDefinition} def
+ * @returns {PrivateComponent}
  */
 function private(def) {
 	return {
@@ -107,6 +125,7 @@ function makeComponent(method, path, ...fn) {
 /**
  * @param {string} path
  * @param {...(Middleware|ComponentDefinition)} fn
+ * @returns {Component}
  */
 function use(path, ...fn) {
 	return makeComponent('use', path, ...fn);
@@ -115,6 +134,7 @@ function use(path, ...fn) {
 /**
  * @param {string} path
  * @param {...(Middleware|ComponentDefinition)} fn
+ * @returns {Component}
  */
 function get(path, ...fn) {
 	return makeComponent('get', path, ...fn);
@@ -122,7 +142,8 @@ function get(path, ...fn) {
 
 /**
  * @param {string} path
- * @param {...Function} [fn]
+ * @param {...(Middleware|ComponentDefinition)} fn
+ * @returns {Component}
  */
 function post(path, ...fn) {
 	return makeComponent('post', path, ...fn);
@@ -130,7 +151,8 @@ function post(path, ...fn) {
 
 /**
  * @param {string} path
- * @param {...Function} [fn]
+ * @param {...(Middleware|ComponentDefinition)} fn
+ * @returns {Component}
  */
 function put(path, ...fn) {
 	return makeComponent('put', path, ...fn);
@@ -138,7 +160,8 @@ function put(path, ...fn) {
 
 /**
  * @param {string} path
- * @param {...Function} [fn]
+ * @param {...(Middleware|ComponentDefinition)} fn
+ * @returns {Component}
  */
 function patch(path, ...fn) {
 	return makeComponent('patch', path, ...fn);
@@ -146,7 +169,8 @@ function patch(path, ...fn) {
 
 /**
  * @param {string} path
- * @param {...Function} [fn]
+ * @param {...(Middleware|ComponentDefinition)} fn
+ * @returns {Component}
  */
 function del(path, ...fn) {
 	return makeComponent('delete', path, ...fn);
