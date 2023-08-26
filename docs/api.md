@@ -21,7 +21,7 @@ component.init(app,'./components')
 
 Arguments:
 
-- **app** = Express instance
+- **app** = Express application instance
 - **componentsDir** = directory to scan for components
 - **options** = options object:
     - **js** = array of additional javascript files to include
@@ -195,6 +195,45 @@ const testing = component.get('/testing',({}, hx) => {
     `;
 })
 ```
+
+### component.use(path, ... middleware?, componentDefinition)
+
+Returns a `Component`.
+
+Defines a htmx component similar to the other component definition methods
+however this matches all request methods (get/post/put etc.).
+
+Arguments:
+
+- **path** = URL path for the component
+- **middleware** = optional, zero or more Express or Connect middlewares
+- **componentDefinition** = function defining the component (may be `async`)
+
+To figure out which method was used to call the component an additional property
+`method` is passed in as a prop:
+
+```js
+const testing = component.use('/testing',({ method, n }) => {
+    if (method === 'POST') {
+        return html`<h1>${n}</h1>`;
+    }
+    else {
+        return html`
+            <form
+                hx-post="/testing"
+                hx-target="closest div"
+            >
+                <input type="text" name="n">
+                <button type="submit">
+                    Submit
+                </button>
+            </form>
+        `;
+    }
+})
+```
+
+Note that the method is passed in as UPPERCASE.
 
 ## HTML Template Tags
 
