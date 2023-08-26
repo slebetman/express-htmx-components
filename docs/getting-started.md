@@ -4,8 +4,8 @@
 
 ### Install
 
-Obviously you need express for this to work. The following
-is the minimal set of dependencies I'd recommend:
+Obviously you need express for this to work. The following is the minimal set
+of dependencies I'd recommend:
 
 ```sh
 npm install express
@@ -13,8 +13,7 @@ npm install express-session
 npm install express-htmx-components
 ```
 
-I'd also suggest you start with the following simple project
-structure:
+I'd also suggest you start with the following simple project structure:
 
 ```text
  my-project/
@@ -77,13 +76,12 @@ components.init(app, COMPONENTS_DIR).then(() => {
 ```
 
 The `components.init()` function will recursively scan the `components`
-directory to load the htmx components. Because each component is also
-an Express route each component is also a web page. Anything that's not
-a web page should be stored outside the `components` directory.
+directory to load the htmx components. Because each component is also an Express
+route each component is also a web page. Anything that's not a web page should
+be stored outside the `components` directory.
 
-Since each component is a web page in its own right it's easy to debug
-each component in isolation. It's one of the advantages of
-express-htmx-component.
+Since each component is a web page in its own right it's easy to debug each
+component in isolation. It's one of the advantages of express-htmx-component.
 
 #### /components/lib/name.js
 
@@ -127,10 +125,10 @@ const name = component.get('/name', ({ session, name }) => {
 module.exports = { name }
 ```
 
-This component simply returns a div and the content of that div depends
-on if the session has saved your name. If you submit your name using the
-form it will add your name as a query param to the request which will then
-be passed to the component as the `name` property.
+This component simply returns a div and the content of that div depends on if
+the session has saved your name. If you submit your name using the form it will
+add your name as a query param to the request which will then be passed to the
+component as the `name` property.
 
 The `session` property is a special prop that is linked to Express
 `req.session`. This allows your component to access the session.
@@ -178,8 +176,9 @@ Now we can access the page by going to `http://localhost:8888`.
 
 ### Developer comfort
 
-Express-htmx-component mainly uses javascript template literal to
-define html. But writing code inside string sucks because you don't get
-nice tools like syntax highlighting or autocompletion. To remedy this,
-if you're using VSCode install the
-[Inline HTML](https://marketplace.visualstudio.com/items?itemName=pushqrdx.inline-html) extension.
+Express-htmx-component mainly uses javascript template literal to define html.
+But writing code inside string sucks because you don't get nice tools like
+syntax highlighting or autocompletion. To remedy this, if you're using VSCode
+install the
+[Inline HTML](https://marketplace.visualstudio.com/items?itemName=pushqrdx.inline-html)
+extension.
