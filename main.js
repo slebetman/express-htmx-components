@@ -5,23 +5,17 @@ const route = express.Router();
 
 let jsToInclude = '';
 let cssToInclude = '';
+let htmxToInclude = 'https://unpkg.com/htmx.org@1.9.4';
 
 function htmx(body) {
-	return `<html>
-	<head>
-	<script
-		src="https://unpkg.com/htmx.org@1.9.4"
-		integrity="sha384-zUfuhFKKZCbHTY6aRR46gxiqszMk5tcHjsVFxnUo8VMus4kHGVdIYVbOYYNlKmHV"
-		crossorigin="anonymous"
-	></script>
-	${jsToInclude}
-	${cssToInclude}
-	</head>
-	<body>
-		${body}
-	</body>
-	</html>
-	`;
+return `<html>
+<head>
+${jsToInclude}
+${cssToInclude}
+</head>
+<body>${body}</body>
+</html>
+`;
 }
 
 /**
@@ -184,16 +178,20 @@ function del(path, ...fn) {
  * @param {Object} [options]
  * @param {string[]} options.css - list of css to include
  * @param {string[]} options.js - list of javascript to include
- */
+ * @param {string} options.htmx - the htmx library to include
+*/
 function init(app, componentsDir, options) {
 	if (options) {
+		if (options.htmx) {
+			htmxToInclude = options.htmx;
+		}
 		if (options.css) {
 			cssToInclude = options.css
 				.map(href => `<link rel="stylesheet" href="${href}"></link>`)
 				.join('\n');
 		}
 		if (options.js) {
-			jsToInclude = options.js
+			jsToInclude = [htmxToInclude, ...options.js]
 				.map(href => `<script src="${href}"></script>`)
 				.join('\n');
 		}
