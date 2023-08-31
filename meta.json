@@ -8,7 +8,7 @@
       },
       {
         "file": "docs/getting-started.html",
-        "title": "Getting Started"
+        "title": "Quick Start"
       },
       {
         "file": "docs/api.html",
@@ -24,7 +24,7 @@
       },
       {
         "file": "getting-started.html",
-        "title": "Getting Started"
+        "title": "Quick Start"
       },
       {
         "file": "api.html",
@@ -41,7 +41,7 @@
       },
       {
         "file": "getting-started.html",
-        "title": "Getting Started",
+        "title": "Quick Start",
         "self": true
       },
       {
