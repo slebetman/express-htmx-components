@@ -17,5 +17,8 @@
     "type": "git"
   },
   "author": "slebetman@gmail.com",
-  "license": "BSD-2-Clause"
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "markdown-styles": "^3.2.0"
+  }
 }

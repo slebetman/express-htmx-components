@@ -1,0 +1,16 @@
+<ul class="nav nav-list">
+  {{#each links}}
+    <li class="sidebar-header-top">
+      {{#if self}}
+        {{title}}
+      {{else}}
+        <a href="{{file}}">{{title}}</a>
+      {{/if}}
+    </li>
+    {{#if self}}
+      {{#each ../headings}}
+        <li class="sidebar-header-{{depth}}"><a href="#{{fixlink id}}">{{fixtext text}}</a></li>
+      {{/each}}
+    {{/if}}
+  {{/each}}
+</ul>

@@ -1,0 +1,53 @@
+{
+  "README": {
+    "links": [
+      {
+        "file": "index.html",
+        "title": "Introduction",
+        "self": true
+      },
+      {
+        "file": "docs/getting-started.html",
+        "title": "Getting Started"
+      },
+      {
+        "file": "docs/api.html",
+        "title": "API Documentation"
+      }
+    ]
+  },
+  "docs/api": {
+    "links": [
+      {
+        "file": "../index.html",
+        "title": "Introduction"
+      },
+      {
+        "file": "getting-started.html",
+        "title": "Getting Started"
+      },
+      {
+        "file": "api.html",
+        "title": "API Documentation",
+        "self": true
+      }
+    ]
+  },
+  "docs/getting-started": {
+    "links": [
+      {
+        "file": "../index.html",
+        "title": "Introduction"
+      },
+      {
+        "file": "getting-started.html",
+        "title": "Getting Started",
+        "self": true
+      },
+      {
+        "file": "api.html",
+        "title": "API Documentation"
+      }
+    ]
+  }
+}

@@ -1,4 +1,6 @@
 node_modules
+docs_html
+build
 package-lock.json
 sessions
 config.json

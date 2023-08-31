@@ -2,7 +2,11 @@
 
 ## Component API
 
-### components.init(app, componentsDir, options)
+### component.init
+
+```js
+component.init(app, componentsDir, options);
+```
 
 Returns a `Promise`.
 
@@ -24,45 +28,44 @@ Arguments:
 - **app** = Express application instance
 - **componentsDir** = directory to scan for components
 - **options** = options object:
-    - **js** = array of additional javascript files to include
-    - **css** = array of css files to include
+  - **js** = array of additional javascript files to include
+  - **css** = array of css files to include
 
 Adding global js and css files to your app:
 
 ```js
-component.init(app,'./components',{
-    js: [
-        'https://unpkg.com/htmx.org/dist/ext/json-enc.js',
-        'https://unpkg.com/htmx.org/dist/ext/alpine-morph.js'
-    ],
-    css: [
-        'https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css'
-    ]
-})
+component.init(app, "./components", {
+  js: ["https://unpkg.com/htmx.org/dist/ext/json-enc.js", "https://unpkg.com/htmx.org/dist/ext/alpine-morph.js"],
+  css: ["https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css"],
+});
 ```
 
-### component\[method\](path, ... middleware?, componentDefinition)
+### component.get/post etc.
+
+```js
+component[method](path, ... middleware?, componentDefinition)
+```
 
 Returns a `Component`.
 
 Defines a htmx component.
 
 ```js
-const component = require('express-htmx-components');
+const component = require("express-htmx-components");
 
-const getHello = component.get('/hello', () => '<h1>Hello World</h1>');
-const posHello = component.post('/hello', () => '<h1>Hello World</h1>');
-const putHello = component.put('/hello', () => '<h1>Hello World</h1>');
-const patHello = component.patch('/hello', () => '<h1>Hello World</h1>');
-const delHello = component.del('/hello', () => '<h1>Hello World</h1>');
+const getHello = component.get("/hello", () => "<h1>Hello World</h1>");
+const posHello = component.post("/hello", () => "<h1>Hello World</h1>");
+const putHello = component.put("/hello", () => "<h1>Hello World</h1>");
+const patHello = component.patch("/hello", () => "<h1>Hello World</h1>");
+const delHello = component.del("/hello", () => "<h1>Hello World</h1>");
 
 module.exports = {
-    getHello,
-    posHello,
-    putHello,
-    patHello,
-    delHello,
-}
+  getHello,
+  posHello,
+  putHello,
+  patHello,
+  delHello,
+};
 ```
 
 Arguments:
@@ -77,20 +80,18 @@ A single object will be passed to it when called containing all the props for
 the component. Query params, request bodies and path params are all
 automatically converted to props,
 
-#### Passing query params:
+#### Passing query params
 
 ```js
-const testing = component.get('/testing',({ n }) => {
-    return html`
-        <h1>Number is: ${n}</h1>
-    `;
-})
+const testing = component.get("/testing", ({ n }) => {
+  return html` <h1>Number is: ${n}</h1> `;
+});
 ```
 
 Calling the component directly:
 
 ```js
-console.log(testing.html({n:100}));
+console.log(testing.html({ n: 100 }));
 ```
 
 Or calling from the browser: `http://localhost:8888/testing?n=100`
@@ -106,42 +107,33 @@ Generates:
 To use a path parameter you need to pass a prop with the same name:
 
 ```js
-const testing = component.get('/testing/:n',({ n }) => {
-    return html`
-        <h1>Number is: ${n}</h1>
-    `;
-})
+const testing = component.get("/testing/:n", ({ n }) => {
+  return html` <h1>Number is: ${n}</h1> `;
+});
 ```
 
 This allows you to call it with: `http://localhost:8888/testing/100`
 
-#### Post body:
+#### Post body
 
 Assuming you're using `express.urlencoded()` as the body parser, you can access
 post body the same way you access query params:
 
 ```js
-const testingGet = component.get('/testing',() => {
-    return html`
-        <div id="theNumber">
-            <form
-                hx-post="/testing"
-                hx-target="#theNumber"
-            >
-                <input type="text" name="n">
-                <button type="submit">
-                    Set Number
-                </button>
-            </form>
-        </div>
-    `;
-})
+const testingGet = component.get("/testing", () => {
+  return html`
+    <div id="theNumber">
+      <form hx-post="/testing" hx-target="#theNumber">
+        <input type="text" name="n" />
+        <button type="submit">Set Number</button>
+      </form>
+    </div>
+  `;
+});
 
-const testingPost = component.post('/testing',({ n }) => {
-    return html`
-        <h1>Number is: ${n}</h1>
-    `;
-})
+const testingPost = component.post("/testing", ({ n }) => {
+  return html` <h1>Number is: ${n}</h1> `;
+});
 ```
 
 Accessing `http://localhost:8888/testing` will call the `testingGet` component
@@ -153,11 +145,9 @@ A special `session` prop is passed into components which is linked to
 `req.session`:
 
 ```js
-const testing = component.get('/testing',({ session }) => {
-    return html`
-        <h1>Hello ${session.user.name}</h1>
-    `;
-})
+const testing = component.get("/testing", ({ session }) => {
+  return html` <h1>Hello ${session.user.name}</h1> `;
+});
 ```
 
 #### Redirects
@@ -166,16 +156,14 @@ To return a `302` redirect you can pass an additional parameter to your
 `componentDefinition` to access the `redirect()` function:
 
 ```js
-const testing = component.get('/testing',({ session }, hx) => {
-                                                    // ^ extra parameter
-    if (!session.user) {
-        return hx.redirect('/login');
-    }
+const testing = component.get("/testing", ({ session }, hx) => {
+  // ^ extra parameter
+  if (!session.user) {
+    return hx.redirect("/login");
+  }
 
-    return html`
-        <h1>Hello ${session.user.name}</h1>
-    `;
-})
+  return html` <h1>Hello ${session.user.name}</h1> `;
+});
 ```
 
 #### Accessing HTTP headers
@@ -184,19 +172,19 @@ The additional `hx` parameter also allows you to read the request headers and
 set the response headers using the `hx.get()` and `hx.set()` functions:
 
 ```js
-const testing = component.get('/testing',({}, hx) => {
-    hx.set('HX-Refresh', true); // set the HX-Refresh header
+const testing = component.get("/testing", ({}, hx) => {
+  hx.set("HX-Refresh", true); // set the HX-Refresh header
 
-    // get user agent:
-    return html`
-        <div>
-            User agent = ${hx.get('User-Agent')}
-        </div>
-    `;
-})
+  // get user agent:
+  return html` <div>User agent = ${hx.get("User-Agent")}</div> `;
+});
 ```
 
-### component.use(path, ... middleware?, componentDefinition)
+### component.use
+
+```js
+component.use(path, ... middleware?, componentDefinition)
+```
 
 Returns a `Component`.
 
@@ -213,24 +201,18 @@ To figure out which method was used to call the component an additional property
 `method` is passed in as a prop:
 
 ```js
-const testing = component.use('/testing',({ method, n }) => {
-    if (method === 'POST') {
-        return html`<h1>${n}</h1>`;
-    }
-    else {
-        return html`
-            <form
-                hx-post="/testing"
-                hx-target="closest div"
-            >
-                <input type="text" name="n">
-                <button type="submit">
-                    Submit
-                </button>
-            </form>
-        `;
-    }
-})
+const testing = component.use("/testing", ({ method, n }) => {
+  if (method === "POST") {
+    return html`<h1>${n}</h1>`;
+  } else {
+    return html`
+      <form hx-post="/testing" hx-target="closest div">
+        <input type="text" name="n" />
+        <button type="submit">Submit</button>
+      </form>
+    `;
+  }
+});
 ```
 
 Note that the method is passed in as UPPERCASE.
@@ -249,12 +231,10 @@ The `html` tag escapes HTML special characters such as `<` to `&lt;` to prevent
 XSS attacks from user input.
 
 ```js
-const { html } = require('express-htmx-components/tags');
+const { html } = require("express-htmx-components/tags");
 
 const data = '<script>alert("HA!")</script>';
-console.log(
-    html`Data is ${data}`
-);
+console.log(html`Data is ${data}`);
 ```
 
 Will output:
@@ -267,20 +247,17 @@ Since htmx components are just HTML strings the `html` tag allows you to insert
 raw HTML into the template string using a special `$${}` substitution:
 
 ```js
-const { html } = require('express-htmx-components/tags');
+const { html } = require("express-htmx-components/tags");
 
-const data = '<h1>Hello</h1>'
-console.log(html`
-    ${data}
-    $${data}
-`)
+const data = "<h1>Hello</h1>";
+console.log(html` ${data} $${data} `);
 ```
 
 Will output:
 
 ```html
-    &lt;h1&gt;Hello&lt;/h1&gt;
-    <h1>Hello</h1>
+&lt;h1&gt;Hello&lt;/h1&gt;
+<h1>Hello</h1>
 ```
 
 ### css
@@ -290,12 +267,12 @@ syntax inside template literals. It does not do any additional processing
 apart from simply building the string as is:
 
 ```js
-const { css } = require('express-htmx-components/tags');
+const { css } = require("express-htmx-components/tags");
 
 const style = css`
-    #username {
-        font-size: 14px;
-        font-weight: bold;
-    }
+  #username {
+    font-size: 14px;
+    font-weight: bold;
+  }
 `;
 ```
