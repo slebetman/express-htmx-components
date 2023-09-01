@@ -30,6 +30,7 @@ Arguments:
 - **options** = options object:
   - **js** = array of additional javascript files to include
   - **css** = array of css files to include
+  - **htmx** = htmx library to include. Defaults to "https://unpkg.com/htmx.org@1.9.4"
 
 Adding global js and css files to your app:
 
@@ -37,6 +38,14 @@ Adding global js and css files to your app:
 component.init(app, "./components", {
   js: ["https://unpkg.com/htmx.org/dist/ext/json-enc.js", "https://unpkg.com/htmx.org/dist/ext/alpine-morph.js"],
   css: ["https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css"],
+});
+```
+
+Overriding default htmx library to include:
+
+```js
+component.init(app, "./components", {
+  htmx: "/static/js/htmx.js",
 });
 ```
 
