@@ -191,7 +191,6 @@ function init(app, componentsDir, options) {
 		}
 		if (options.css) {
 			cssToInclude = options.css
-				.map(href => `<link rel="stylesheet" href="${href}"></link>`)
 				.map(href => {
 					if (typeof href === 'string') {
 						return `<link rel="stylesheet" href="${href}"></link>`;
