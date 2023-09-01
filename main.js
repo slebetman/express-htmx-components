@@ -5,7 +5,11 @@ const route = express.Router();
 
 let jsToInclude = '';
 let cssToInclude = '';
-let htmxToInclude = 'https://unpkg.com/htmx.org@1.9.4';
+let htmxToInclude = {
+	src: "https://unpkg.com/htmx.org@1.9.4",
+	integrity: "sha384-zUfuhFKKZCbHTY6aRR46gxiqszMk5tcHjsVFxnUo8VMus4kHGVdIYVbOYYNlKmHV",
+	crossorigin: "anonymous",
+};
 
 function htmx(body) {
 return `<html>
@@ -188,11 +192,40 @@ function init(app, componentsDir, options) {
 		if (options.css) {
 			cssToInclude = options.css
 				.map(href => `<link rel="stylesheet" href="${href}"></link>`)
+				.map(href => {
+					if (typeof href === 'string') {
+						return `<link rel="stylesheet" href="${href}"></link>`;
+					}
+					else if (href.href) {
+						const params = [];
+						for (const k in href) {
+							params.push(`${k}="${href[k]}"`);
+						}
+						return `<link rel="stylesheet" ${params.join(' ')}"></link>`
+					}
+					else {
+						throw new Error(`Invalid js specification: ${href}`)
+					}
+				})
 				.join('\n');
 		}
 		if (options.js) {
 			jsToInclude = [htmxToInclude, ...options.js]
-				.map(href => `<script src="${href}"></script>`)
+				.map(href => {
+					if (typeof href === 'string') {
+						return `<script src="${href}"></script>`;
+					}
+					else if (href.src) {
+						const params = [];
+						for (const k in href) {
+							params.push(`${k}="${href[k]}"`);
+						}
+						return `<script ${params.join(' ')}></script>`
+					}
+					else {
+						throw new Error(`Invalid js specification: ${href}`)
+					}
+				})
 				.join('\n');
 		}
 	}
