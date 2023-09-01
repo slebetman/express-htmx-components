@@ -38,8 +38,13 @@ Adding global js and css files to your app:
 
 ```js
 component.init(app, "./components", {
-  js: ["https://unpkg.com/htmx.org/dist/ext/json-enc.js", "https://unpkg.com/htmx.org/dist/ext/alpine-morph.js"],
-  css: ["https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css"],
+  js: [
+    "https://unpkg.com/htmx.org/dist/ext/json-enc.js",
+    "https://unpkg.com/htmx.org/dist/ext/alpine-morph.js"
+  ],
+  css: [
+    "https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css"
+  ],
 });
 ```
 
