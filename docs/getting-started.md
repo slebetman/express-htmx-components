@@ -108,8 +108,7 @@ const name = component.get("/name", ({ session, name }) => {
     return html`
       <div id="name-container">
         <form hx-get="/name" hx-target="#name-container" hx-swap="outerHTML">
-          What's your name?
-          <input name="name" id="name" type="text" />
+          What's your name? <input name="name" id="name" type="text" />
           <button type="submit">Submit</button>
         </form>
       </div>
