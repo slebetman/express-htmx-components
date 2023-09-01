@@ -1,3 +1,3 @@
 module.exports = function (id) {
-  return id.replace(/[.:/]/g, "");
+  return id.replace(/[.:/()]/g, "");
 };

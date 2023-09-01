@@ -2,7 +2,7 @@
 
 ## Component API
 
-### component.init
+### component.init( )
 
 ```js
 component.init(app, componentsDir, options);
@@ -49,10 +49,10 @@ component.init(app, "./components", {
 });
 ```
 
-### component.get/post etc.
+### component.get( )
 
 ```js
-component[method](path, ... middleware?, componentDefinition)
+component.get(path, ... middleware?, componentDefinition)
 ```
 
 Returns a `Component`.
@@ -63,17 +63,9 @@ Defines a htmx component.
 const component = require("express-htmx-components");
 
 const getHello = component.get("/hello", () => "<h1>Hello World</h1>");
-const posHello = component.post("/hello", () => "<h1>Hello World</h1>");
-const putHello = component.put("/hello", () => "<h1>Hello World</h1>");
-const patHello = component.patch("/hello", () => "<h1>Hello World</h1>");
-const delHello = component.del("/hello", () => "<h1>Hello World</h1>");
 
 module.exports = {
   getHello,
-  posHello,
-  putHello,
-  patHello,
-  delHello,
 };
 ```
 
@@ -123,31 +115,6 @@ const testing = component.get("/testing/:n", ({ n }) => {
 
 This allows you to call it with: `http://localhost:8888/testing/100`
 
-#### Post body
-
-Assuming you're using `express.urlencoded()` as the body parser, you can access
-post body the same way you access query params:
-
-```js
-const testingGet = component.get("/testing", () => {
-  return html`
-    <div id="theNumber">
-      <form hx-post="/testing" hx-target="#theNumber">
-        <input type="text" name="n" />
-        <button type="submit">Set Number</button>
-      </form>
-    </div>
-  `;
-});
-
-const testingPost = component.post("/testing", ({ n }) => {
-  return html` <h1>Number is: ${n}</h1> `;
-});
-```
-
-Accessing `http://localhost:8888/testing` will call the `testingGet` component
-but submitting the form will call the `testingPost` component.
-
 #### Accessing request session
 
 A special `session` prop is passed into components which is linked to
@@ -189,7 +156,82 @@ const testing = component.get("/testing", ({}, hx) => {
 });
 ```
 
-### component.use
+### component.post( )
+
+```js
+component.post(path, ... middleware?, componentDefinition)
+```
+
+Returns a `Component`.
+
+Defines a htmx component. Behaves similar to `component.get()` but handles a POST request.
+
+```js
+const component = require("express-htmx-components");
+
+const postHello = component.post("/hello", () => "<h1>Hello World</h1>");
+
+module.exports = {
+  postHello,
+};
+```
+
+#### Post body
+
+Assuming you're using `express.urlencoded()` as the body parser, you can access
+post body the same way you access query params:
+
+```js
+const testingGet = component.get("/testing", () => {
+  return html`
+    <div id="theNumber">
+      <form hx-post="/testing" hx-target="#theNumber">
+        <input type="text" name="n" />
+        <button type="submit">Set Number</button>
+      </form>
+    </div>
+  `;
+});
+
+const testingPost = component.post("/testing", ({ n }) => {
+  return html` <h1>Number is: ${n}</h1> `;
+});
+```
+
+Accessing `http://localhost:8888/testing` will call the `testingGet` component
+but submitting the form will call the `testingPost` component.
+
+### component.put( )
+
+```js
+component.put(path, ... middleware?, componentDefinition)
+```
+
+Returns a `Component`.
+
+Defines a htmx component. Behaves similar to `component.post()` but handles a PUT request.
+
+### component.patch( )
+
+```js
+component.patch(path, ... middleware?, componentDefinition)
+```
+
+Returns a `Component`.
+
+Defines a htmx component. Behaves similar to `component.post()` but handles a PATCH request.
+
+### component.del( )
+
+```js
+component.patch(path, ... middleware?, componentDefinition)
+```
+
+Returns a `Component`.
+
+Defines a htmx component. Behaves similar to `component.get()` but handles a DELETE request.
+
+### component.use( )
 
 ```js
 component.use(path, ... middleware?, componentDefinition)
@@ -205,6 +247,8 @@ Arguments:
 - **path** = URL path for the component
 - **middleware** = optional, zero or more Express or Connect middlewares
 - **componentDefinition** = function defining the component (may be `async`)
+
+#### Request method
 
 To figure out which method was used to call the component an additional property
 `method` is passed in as a prop:

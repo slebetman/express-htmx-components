@@ -30,9 +30,7 @@ h2 {
   margin-top: 1em;
 }
 h3 {
-  margin-top: 2em;
-}
-h3 {
+  margin-top: 1.5em;
   border-top: 1px solid #ccc;
 }
 h4,
@@ -51,6 +49,10 @@ h6 {
   overflow: hidden auto;
   margin: 0;
   padding-top: 10px;
+  padding-bottom: 24px;
+}
+#sidebar {
+  width: 300px;
 }
 #sidebar ul {
   padding-top: 30px;
@@ -61,6 +63,7 @@ h6 {
 .nav-list {
   font-size: 17px;
   width: 300px;
+  list-style: disc;
 }
 .nav-list li {
   margin-bottom: 5px;
@@ -72,6 +75,8 @@ h6 {
 }
 .sidebar-header-top {
   font-weight: bold;
+  list-style: none;
+  margin-left: -5px;
 }
 .sidebar-header-1 {
   display: none;
@@ -84,10 +89,13 @@ h6 {
 }
 .sidebar-header-4 {
   margin-left: 45px;
+  list-style: "- ";
 }
 .sidebar-header-5 {
   margin-left: 60px;
+  list-style: "- ";
 }
 .sidebar-header-6 {
   margin-left: 75px;
+  list-style: "- ";
 }
