@@ -99,7 +99,11 @@ const name = component.get("/name", ({ session, name }) => {
   }
 
   if (session.name) {
-    return html` <div id="name-container">Hello <span class="name">${session.name}</span>!</div> `;
+    return html`
+        <div id="name-container">
+            Hello <span class="name">${session.name}</span>!
+        </div>
+    `;
   } else {
     return html`
       <div id="name-container">
