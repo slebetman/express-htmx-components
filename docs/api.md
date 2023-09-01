@@ -31,7 +31,7 @@ const app = express();
 
 component.init(app,'./components')
     .then(() => app.listen(8888))
-    .catch(err) => console.error(err));
+    .catch(err => console.error(err));
 ```
 
 Adding global js and css files to your app:
