@@ -12,6 +12,17 @@ Returns a `Promise`.
 
 Recursively loads components.
 
+Arguments:
+
+- **app** = Express application instance
+- **componentsDir** = directory to scan for components
+- **options** = options object:
+  - **js** = array of additional javascript files to include
+  - **css** = array of css files to include
+  - **htmx** = htmx library to include. Defaults to "https://unpkg.com/htmx.org@1.9.4"
+
+Example:
+
 ```js
 const express = require('express');
 const component = require('express-htmx-components');
@@ -22,15 +33,6 @@ component.init(app,'./components')
     .then(() => app.listen(8888))
     .catch(err) => console.error(err));
 ```
-
-Arguments:
-
-- **app** = Express application instance
-- **componentsDir** = directory to scan for components
-- **options** = options object:
-  - **js** = array of additional javascript files to include
-  - **css** = array of css files to include
-  - **htmx** = htmx library to include. Defaults to "https://unpkg.com/htmx.org@1.9.4"
 
 Adding global js and css files to your app:
 
@@ -59,16 +61,6 @@ Returns a `Component`.
 
 Defines a htmx component.
 
-```js
-const component = require("express-htmx-components");
-
-const getHello = component.get("/hello", () => "<h1>Hello World</h1>");
-
-module.exports = {
-  getHello,
-};
-```
-
 Arguments:
 
 - **path** = URL path for the component
@@ -81,11 +73,25 @@ A single object will be passed to it when called containing all the props for
 the component. Query params, request bodies and path params are all
 automatically converted to props,
 
+Example:
+
+```js
+const component = require("express-htmx-components");
+
+const getHello = component.get("/hello", () => "<h1>Hello World</h1>");
+
+module.exports = {
+  getHello,
+};
+```
+
 #### Passing query params
 
 ```js
 const testing = component.get("/testing", ({ n }) => {
-  return html` <h1>Number is: ${n}</h1> `;
+  return html`
+    <h1>Number is: ${n}</h1>
+  `;
 });
 ```
 
@@ -109,7 +115,9 @@ To use a path parameter you need to pass a prop with the same name:
 
 ```js
 const testing = component.get("/testing/:n", ({ n }) => {
-  return html` <h1>Number is: ${n}</h1> `;
+  return html`
+    <h1>Number is: ${n}</h1>
+  `;
 });
 ```
 
@@ -122,7 +130,9 @@ A special `session` prop is passed into components which is linked to
 
 ```js
 const testing = component.get("/testing", ({ session }) => {
-  return html` <h1>Hello ${session.user.name}</h1> `;
+  return html`
+    <h1>Hello ${session.user.name}</h1>
+  `;
 });
 ```
 
@@ -138,7 +148,9 @@ const testing = component.get("/testing", ({ session }, hx) => {
     return hx.redirect("/login");
   }
 
-  return html` <h1>Hello ${session.user.name}</h1> `;
+  return html`
+    <h1>Hello ${session.user.name}</h1>
+  `;
 });
 ```
 
@@ -152,7 +164,9 @@ const testing = component.get("/testing", ({}, hx) => {
   hx.set("HX-Refresh", true); // set the HX-Refresh header
 
   // get user agent:
-  return html` <div>User agent = ${hx.get("User-Agent")}</div> `;
+  return html`
+    <div>User agent = ${hx.get("User-Agent")}</div>
+  `;
 });
 ```
 
@@ -165,6 +179,8 @@ component.post(path, ... middleware?, componentDefinition)
 Returns a `Component`.
 
 Defines a htmx component. Behaves similar to `component.get()` but handles a POST request.
+
+Example:
 
 ```js
 const component = require("express-htmx-components");
@@ -194,7 +210,9 @@ const testingGet = component.get("/testing", () => {
 });
 
 const testingPost = component.post("/testing", ({ n }) => {
-  return html` <h1>Number is: ${n}</h1> `;
+  return html` 
+    <h1>Number is: ${n}</h1>
+  `;
 });
 ```
 
