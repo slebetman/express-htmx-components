@@ -29,26 +29,20 @@ javascript.
 Here's an example of a simple counter component:
 
 ```js
-const counter = component.get('/counter',({ id, count }) => {
-    return html`
-    <div id="count-${id}">
-        <h3>${count}</h3>
-        <button hx-get="/counter/incr?id=${id}&count=${count}"
-            hx-target="#count-${id}"
-            hx-swap="outerHTML"
-        >
-            +1
-        </button>
-    </div>`
-})
+const counter = component.get("/counter", ({ id, count }) => {
+  return html` <div id="count-${id}">
+    <h3>${count}</h3>
+    <button hx-get="/counter/incr?id=${id}&count=${count}" hx-target="#count-${id}" hx-swap="outerHTML">+1</button>
+  </div>`;
+});
 
-const incr = component.get('/counter/incr',({ id, count }) => {
-    let n = count;
-    n++;
-    return counter.html({ id, count: n });
-})
+const incr = component.get("/counter/incr", ({ id, count }) => {
+  let n = count;
+  n++;
+  return counter.html({ id, count: n });
+});
 
-module.exports = { counter, incr }
+module.exports = { counter, incr };
 ```
 
 Each component exports an object with two properties:

@@ -10,10 +10,13 @@
     <link type="text/css" rel="stylesheet" href="{{asset 'css/style.css'}}" />
   </head>
   <body>
-    <div class="container-fluid">
+    <div id="header">
+      <h1>Express &lt;<span class="slash">/</span>&gt; HTM<span class="slash">X</span> Components</h1>
+    </div>
+    <div id="doc" class="container-fluid">
       <div class="row-fluid">
-        <div class="span3">{{~> sidebar }}</div>
-        <div class="span9 main">{{~> content}}</div>
+        <div id="sidebar" class="span3">{{~> sidebar }}</div>
+        <div id="content" class="span8 main">{{~> content}}</div>
       </div>
     </div>
 

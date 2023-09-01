@@ -90,39 +90,30 @@ want a database to store your name but for this simple test let's just store
 it in the session:
 
 ```js
-const component = require('express-htmx-components');
-const { html } = require('express-htmx-components/tags');
+const component = require("express-htmx-components");
+const { html } = require("express-htmx-components/tags");
 
-const name = component.get('/name', ({ session, name }) => {
-    if (name) {
-        session.name = name;
-    }
+const name = component.get("/name", ({ session, name }) => {
+  if (name) {
+    session.name = name;
+  }
 
-    if (session.name) {
-        return html`
-            <div id="name-container">
-                Hello <span class="name">${session.name}</span>!
-            </div>
-        `;
-    }
-    else {
-        return html`
-            <div id="name-container">
-                <form
-                    hx-get="/name"
-                    hx-target="#name-container"
-                    hx-swap="outerHTML"
-                >
-                    What's your name?
-                    <input name="name" id="name" type="text">
-                    <button type="submit">Submit</button>
-                </form>
-            </div>
-        `;
-    }
-})
+  if (session.name) {
+    return html` <div id="name-container">Hello <span class="name">${session.name}</span>!</div> `;
+  } else {
+    return html`
+      <div id="name-container">
+        <form hx-get="/name" hx-target="#name-container" hx-swap="outerHTML">
+          What's your name?
+          <input name="name" id="name" type="text" />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    `;
+  }
+});
 
-module.exports = { name }
+module.exports = { name };
 ```
 
 This component simply returns a div and the content of that div depends on if
@@ -141,17 +132,17 @@ Since this component has a URL you can test it by going to
 Now let's include the name component above into another page:
 
 ```js
-const component = require('express-htmx-components');
-const { html } = require('express-htmx-components/tags');
-const { name } = require('./lib/name');
+const component = require("express-htmx-components");
+const { html } = require("express-htmx-components/tags");
+const { name } = require("./lib/name");
 
-const home = component.get('/',({ session }) => {
-    return html`
-        <h1>Welcome to HTMX</h1>
+const home = component.get("/", ({ session }) => {
+  return html`
+    <h1>Welcome to HTMX</h1>
 
-        $${ name.html({ session }) }
-    `;
-})
+    $${name.html({ session })}
+  `;
+});
 
 module.exports = { home };
 ```

@@ -111,7 +111,7 @@ Generates:
 <h1>Number is: 100</h1>
 ```
 
-#### Path parameter:
+#### Path parameter
 
 To use a path parameter you need to pass a prop with the same name:
 
