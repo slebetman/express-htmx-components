@@ -70,7 +70,7 @@ components.init(app, COMPONENTS_DIR).then(() => {
     })
 
     app.listen(PORT, () => {
-        console.log(`Server started, listening on ${PORT} ..`
+        console.log(`Server started, listening on ${PORT} ..`)
     });
 });
 ```
