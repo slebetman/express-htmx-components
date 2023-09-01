@@ -148,7 +148,7 @@ To return a `302` redirect you can pass an additional parameter to your
 
 ```js
 const testing = component.get("/testing", ({ session }, hx) => {
-  // ^ extra parameter
+                                                     // ^ extra parameter
   if (!session.user) {
     return hx.redirect("/login");
   }
