@@ -303,14 +303,17 @@ raw HTML into the template string using a special `$${}` substitution:
 const { html } = require("express-htmx-components/tags");
 
 const data = "<h1>Hello</h1>";
-console.log(html` ${data} $${data} `);
+console.log(html`
+  ${data}
+  $${data}
+`);
 ```
 
 Will output:
 
 ```html
-&lt;h1&gt;Hello&lt;/h1&gt;
-<h1>Hello</h1>
+  &lt;h1&gt;Hello&lt;/h1&gt;
+  <h1>Hello</h1>
 ```
 
 ### css
