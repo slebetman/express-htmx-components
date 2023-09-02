@@ -43,6 +43,15 @@ h6 {
   border: 1px solid #ccc;
   padding: 40px;
 }
+#doc {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+}
+.doc-container {
+  width: 1200px;
+  margin: auto;
+}
 #sidebar,
 #content {
   height: calc(100vh - 80px);
@@ -52,7 +61,10 @@ h6 {
   padding-bottom: 32px;
 }
 #sidebar {
-  width: 300px;
+  width: 25%;
+}
+#content {
+  width: 65%;
 }
 #sidebar ul {
   padding-top: 30px;
