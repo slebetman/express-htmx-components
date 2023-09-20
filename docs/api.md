@@ -19,7 +19,7 @@ Arguments:
 - **options** = options object:
   - **js** = array of additional javascript files to include
   - **css** = array of css files to include
-  - **htmx** = htmx library to include. Defaults to "https://unpkg.com/htmx.org@1.9.4"
+  - **htmx** = htmx library to include. Defaults to "https://unpkg.com/htmx.org@1.9.5"
 
 Example:
 
