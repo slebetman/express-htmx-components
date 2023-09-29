@@ -182,6 +182,7 @@ function del(path, ...fn) {
  * @param {string[]} options.js - list of javascript to include
  * @param {string} options.htmx - the htmx library to include
  * @param {string} options.favicon - favicon
+ * @param {Object[]} options.link - generic link tag
 */
 function init(app, componentsDir, options) {
 	if (options) {
@@ -198,13 +199,28 @@ function init(app, componentsDir, options) {
 			else if (options.favicon.href) {
 				const params = [];
 				for (const k in options.favicon) {
-					params.push(`${k}="${href[k]}"`);
+					params.push(`${k}="${options.favicon[k]}"`);
 				}
 				headContent += `<link rel="icon" ${params.join(' ')}"></link>`
 			}
 			else {
 				throw new Error(`Invalid favicon specification: ${options.favicon}`)
 			}
+		}
+		if (options.link) {
+			headContent += options.link.map(link => {
+				if (link.rel) {
+					const params = [];
+					for (const k in link) {
+						params.push(`${k}="${link[k]}"`);
+					}
+					return `<link ${params.join(' ')}"></link>`
+				}
+				else {
+					throw new Error(`Invalid link specification: ${link}`)
+				}
+			})
+			.join('\n');
 		}
 		if (options.css) {
 			headContent += options.css
