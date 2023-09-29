@@ -1019,6 +1019,7 @@ pre code {
   white-space: pre-wrap;
   background-color: transparent;
   border: 0;
+  text-wrap: nowrap;
 }
 
 .pre-scrollable {
