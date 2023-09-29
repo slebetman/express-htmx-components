@@ -3,8 +3,7 @@ const express = require('express');
 
 const route = express.Router();
 
-let jsToInclude = '';
-let cssToInclude = '';
+let headContent = '';
 let htmxToInclude = {
 	src: "https://unpkg.com/htmx.org@1.9.5/dist/htmx.min.js",
 	integrity: "sha384-xcuj3WpfgjlKF+FXhSQFQ0ZNr39ln+hwjN3npfM9VBnUskLolQAcN80McRIVOPuO",
@@ -14,8 +13,7 @@ let htmxToInclude = {
 function htmx(body) {
 return `<html>
 <head>
-${jsToInclude}
-${cssToInclude}
+${headContent}
 </head>
 <body>${body}</body>
 </html>
@@ -183,14 +181,33 @@ function del(path, ...fn) {
  * @param {string[]} options.css - list of css to include
  * @param {string[]} options.js - list of javascript to include
  * @param {string} options.htmx - the htmx library to include
+ * @param {string} options.favicon - favicon
 */
 function init(app, componentsDir, options) {
 	if (options) {
 		if (options.htmx) {
-			htmxToInclude = options.htmx;
+			if (!options.js) {
+				options.js = [];
+			}
+			options.js.unshift(options.htmx);
+		}
+		if (options.favicon) {
+			if (typeof options.favicon === 'string') {
+				headContent += `<link rel="icon" type="image/png" href="${options.favicon}"></link>`
+			}
+			else if (options.favicon.href) {
+				const params = [];
+				for (const k in options.favicon) {
+					params.push(`${k}="${href[k]}"`);
+				}
+				headContent += `<link rel="icon" ${params.join(' ')}"></link>`
+			}
+			else {
+				throw new Error(`Invalid favicon specification: ${options.favicon}`)
+			}
 		}
 		if (options.css) {
-			cssToInclude = options.css
+			headContent += options.css
 				.map(href => {
 					if (typeof href === 'string') {
 						return `<link rel="stylesheet" href="${href}"></link>`;
@@ -208,25 +225,23 @@ function init(app, componentsDir, options) {
 				})
 				.join('\n');
 		}
-		if (options.js) {
-			jsToInclude = [htmxToInclude, ...options.js]
-				.map(href => {
-					if (typeof href === 'string') {
-						return `<script src="${href}"></script>`;
+		headContent += [htmxToInclude, ...options.js]
+			.map(href => {
+				if (typeof href === 'string') {
+					return `<script src="${href}"></script>`;
+				}
+				else if (href.src) {
+					const params = [];
+					for (const k in href) {
+						params.push(`${k}="${href[k]}"`);
 					}
-					else if (href.src) {
-						const params = [];
-						for (const k in href) {
-							params.push(`${k}="${href[k]}"`);
-						}
-						return `<script ${params.join(' ')}></script>`
-					}
-					else {
-						throw new Error(`Invalid js specification: ${href}`)
-					}
-				})
-				.join('\n');
-		}
+					return `<script ${params.join(' ')}></script>`
+				}
+				else {
+					throw new Error(`Invalid js specification: ${href}`)
+				}
+			})
+			.join('\n');
 	}
 
 	return new Promise((ok, fail) => {
