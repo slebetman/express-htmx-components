@@ -20,6 +20,8 @@ Arguments:
   - **js** = array of additional javascript files to include
   - **css** = array of css files to include
   - **htmx** = htmx library to include. Defaults to "https://unpkg.com/htmx.org@1.9.5"
+  - **favicon** = link to a favicon
+  - **link** = add link tags to the document head
 
 Example:
 
@@ -53,6 +55,46 @@ Overriding default htmx library to include:
 ```js
 component.init(app, "./components", {
   htmx: "/static/js/htmx.js",
+});
+
+// or
+
+component.init(app, "./components", {
+  htmx: {
+    src: "https://unpkg.com/htmx.org@1.9.5/dist/htmx.min.js",
+    integrity: "sha384-xcuj3WpfgjlKF+FXhSQFQ0ZNr39ln+hwjN3npfM9VBnUskLolQAcN80McRIVOPuO",
+    crossorigin: "anonymous",
+  }
+});
+```
+
+Add a favicon:
+
+```js
+component.init(app, "./components", {
+  favicon: "/static/icon.png",
+});
+
+// or
+
+component.init(app, "./components", {
+  favicon: {
+    href: "/static/icon.png",
+    type: "image/png",
+  }
+});
+```
+
+Add a manifest:
+
+```js
+component.init(app, "./components", {
+  link: [
+    {
+      rel: 'manifest'
+      href: "/static/manifest.json",
+    }
+  ]
 });
 ```
 
