@@ -235,7 +235,8 @@ function init(app, componentsDir, options) {
 			if (component.route) app.use(component.route);
 			else {
 				// support multiple component
-				for (const c in component) {
+				for (const k in component) {
+					const c = component[k];
 					if (c.route) app.use(c.route);
 				}
 			}
