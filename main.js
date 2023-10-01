@@ -185,12 +185,17 @@ function del(path, ...fn) {
  * @param {Object[]} options.link - generic link tag
 */
 function init(app, componentsDir, options) {
+	let jsToInclude = [htmxToInclude];
+
 	if (options) {
+		if (!options.js) {
+			options.js = [];
+		}
 		if (options.htmx) {
-			if (!options.js) {
-				options.js = [];
-			}
 			options.js.unshift(options.htmx);
+		}
+		else {
+			options.js.unshift(htmxToInclude)
 		}
 		if (options.favicon) {
 			if (typeof options.favicon === 'string') {
@@ -241,24 +246,27 @@ function init(app, componentsDir, options) {
 				})
 				.join('\n');
 		}
-		headContent += [htmxToInclude, ...options.js]
-			.map(href => {
-				if (typeof href === 'string') {
-					return `<script src="${href}"></script>`;
-				}
-				else if (href.src) {
-					const params = [];
-					for (const k in href) {
-						params.push(`${k}="${href[k]}"`);
-					}
-					return `<script ${params.join(' ')}></script>`
-				}
-				else {
-					throw new Error(`Invalid js specification: ${href}`)
-				}
-			})
-			.join('\n');
+		jsToInclude = options.js;
 	}
+
+	headContent += jsToInclude.map(href => {
+		if (typeof href === 'string') {
+			return `<script src="${href}"></script>`;
+		}
+		else if (href.src) {
+			const params = [];
+			for (const k in href) {
+				params.push(`${k}="${href[k]}"`);
+			}
+			return `<script ${params.join(' ')}></script>`
+		}
+		else {
+			throw new Error(`Invalid js specification: ${href}`)
+		}
+	})
+	.join('\n');
+
+	console.log(headContent);
 
 	return new Promise((ok, fail) => {
 		find.eachfile(/\.js$/, componentsDir, (module) => {

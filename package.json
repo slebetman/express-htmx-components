@@ -1,6 +1,6 @@
 {
   "name": "express-htmx-components",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Simple htmx component server for Express",
   "homepage": "https://slebetman.github.io/express-htmx-components/",
   "main": "main.js",
