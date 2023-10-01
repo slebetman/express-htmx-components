@@ -266,8 +266,6 @@ function init(app, componentsDir, options) {
 	})
 	.join('\n');
 
-	console.log(headContent);
-
 	return new Promise((ok, fail) => {
 		find.eachfile(/\.js$/, componentsDir, (module) => {
 			const component = require(module);
