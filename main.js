@@ -1,8 +1,6 @@
 const find = require('find');
 const express = require('express');
 
-const route = express.Router();
-
 let headContent = '';
 let htmxToInclude = {
 	src: "https://unpkg.com/htmx.org@1.9.5/dist/htmx.min.js",
@@ -75,12 +73,17 @@ function saveSession(session) {
 
 function makeComponent(method, path, ...fn) {
 	const def = fn.pop();
+	const route = express.Router();
 	route[method](path, ...fn, async (req, res, next) => {
 		const props = {
 			...req.body,
 			...req.params,
 			...req.query,
 		};
+
+		if (req.files) {
+			props.files = req.files;
+		}
 
 		const hx = {
 			redirect: async (x) => {
@@ -278,8 +281,8 @@ function init(app, componentsDir, options) {
 				}
 			}
 		})
-			.error(fail)
-			.end(ok);
+		.error(fail)
+		.end(ok);
 	});
 }
 
