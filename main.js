@@ -3,8 +3,8 @@ const express = require('express');
 
 let headContent = '';
 let htmxToInclude = {
-	src: "https://unpkg.com/htmx.org@1.9.5/dist/htmx.min.js",
-	integrity: "sha384-xcuj3WpfgjlKF+FXhSQFQ0ZNr39ln+hwjN3npfM9VBnUskLolQAcN80McRIVOPuO",
+	src: "https://unpkg.com/htmx.org@1.9.9/dist/htmx.min.js",
+	integrity: "sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX",
 	crossorigin: "anonymous",
 };
 

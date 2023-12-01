@@ -8,3 +8,5 @@ sample.db
 .vscode
 .DS_Store
 .prettierignore
+test-server.js
+components

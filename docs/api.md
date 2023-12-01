@@ -19,7 +19,7 @@ Arguments:
 - **options** = options object:
   - **js** = array of additional javascript files to include
   - **css** = array of css files to include
-  - **htmx** = htmx library to include. Defaults to "https://unpkg.com/htmx.org@1.9.5"
+  - **htmx** = htmx library to include. Defaults to "https://unpkg.com/htmx.org@1.9.9"
   - **favicon** = link to a favicon
   - **link** = add link tags to the document head
 
@@ -61,8 +61,8 @@ component.init(app, "./components", {
 
 component.init(app, "./components", {
   htmx: {
-    src: "https://unpkg.com/htmx.org@1.9.5/dist/htmx.min.js",
-    integrity: "sha384-xcuj3WpfgjlKF+FXhSQFQ0ZNr39ln+hwjN3npfM9VBnUskLolQAcN80McRIVOPuO",
+    src: "https://unpkg.com/htmx.org@1.9.9/dist/htmx.min.js",
+    integrity: "sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX",
     crossorigin: "anonymous",
   }
 });
