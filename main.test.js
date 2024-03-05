@@ -141,7 +141,7 @@ test('POST component should accept a post request', async () => {
 		.toMatch(/hello world/);
 })
 
-test('PUT component should accept a post request', async () => {
+test('PUT component should accept a put request', async () => {
 	const app = express();
 
 	const put = component.put('/test', ({hello}) => {
@@ -171,7 +171,7 @@ test('PUT component should accept a post request', async () => {
 		.toMatch(/hello world/);
 })
 
-test('PATCH component should accept a post request', async () => {
+test('PATCH component should accept a patch request', async () => {
 	const app = express();
 
 	const patch = component.patch('/test', ({hello}) => {
@@ -193,7 +193,7 @@ test('PATCH component should accept a post request', async () => {
 		.toMatch(/hello world/);
 })
 
-test('DEL component should accept a post request', async () => {
+test('DEL component should accept a delete request', async () => {
 	const app = express();
 
 	const del = component.del('/test', ({hello}) => {
