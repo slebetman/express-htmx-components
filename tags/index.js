@@ -1,5 +1,13 @@
 // Simple html template tag. Mostly used for compatibility with vscode lit-html extension
 
+const htmlEscapeCodes = {
+	"&": "&amp;",
+	"<": "&lt;",
+	">": "&gt;",
+	'"': "&quot;",
+	"'": "&#039;",
+};
+
 function combine (pre, val) {
 	let value = val;
 
@@ -21,11 +29,7 @@ function escape (pre, val) {
 		return pre.replace(/\$$/,'') + value;
 	}
 	return pre + String(value)
-		.replaceAll('&', "&amp;")
-		.replaceAll('<', "&lt;")
-		.replaceAll('>', "&gt;")
-		.replaceAll('"', "&quot;")
-		.replaceAll("'", "&#039;");
+		.replace(/&|<|>|"|'/g, (m) => htmlEscapeCodes[m];
 }
 
 const html = (strings, ...values) => {
