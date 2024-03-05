@@ -51,7 +51,7 @@ ${headContent}
  * @param {ComponentDefinition} def
  * @returns {PrivateComponent}
  */
-function private(def) {
+function routeless(def) {
 	return {
 		html: def,
 	};
@@ -92,7 +92,7 @@ function makeComponent(method, path, ...fn) {
 				res.redirect(x);
 			},
 			set: (k, v) => res.set(k, v),
-			get: (k) => req.get(k, v),
+			get: (k) => req.get(k),
 		};
 		props.session = req.session;
 
@@ -287,7 +287,7 @@ function init(app, componentsDir, options) {
 }
 
 module.exports = {
-	private,
+	routeless,
 	use,
 	get,
 	post,
