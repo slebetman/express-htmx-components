@@ -10,3 +10,4 @@ sample.db
 .prettierignore
 test-server.js
 components
+coverage
