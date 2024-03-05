@@ -29,7 +29,7 @@ function escape (pre, val) {
 		return pre.replace(/\$$/,'') + value;
 	}
 	return pre + String(value)
-		.replace(/&|<|>|"|'/g, (m) => htmlEscapeCodes[m];
+		.replace(/&|<|>|"|'/g, (m) => htmlEscapeCodes[m]);
 }
 
 const html = (strings, ...values) => {
