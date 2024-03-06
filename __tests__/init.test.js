@@ -256,9 +256,7 @@ test("INIT should ignore components without routes", async () => {
 	const component = require("../main");
 	const app = express();
 
-	const comp = component.routeless(() => {
-		return 'hello world'
-	})
+	const comp = { test: {} }
 
 	jest.mock(
 		"../testing.js",

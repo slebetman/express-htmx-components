@@ -214,16 +214,6 @@ test("DEL component should accept a delete request", async () => {
 	expect(jsonResponse.text).toMatch(/hello world/);
 });
 
-test("Routeless component should only have html", () => {
-	const comp = component.routeless(({ hello }) => {
-		return `<div>hello ${hello}</div>`;
-	});
-
-	expect(comp.html({ hello: "world" })).toMatch(/hello world/);
-
-	expect(comp.route).toBeUndefined();
-});
-
 test("USE method should accept any method", async () => {
 	const app = express();
 

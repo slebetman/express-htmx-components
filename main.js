@@ -57,11 +57,6 @@ ${headContent}
  */
 
 /**
- * @typedef {Object} PrivateComponent
- * @property {ComponentFunction} html
- */
-
-/**
  * @callback ComponentDefinition
  * @param {Object} props
  * @returns {string}
@@ -73,16 +68,6 @@ ${headContent}
  * @param {express.Response} res
  * @param {express.NextFunction} next
  */
-
-/**
- * @param {ComponentDefinition} def
- * @returns {PrivateComponent}
- */
-function routeless(def) {
-	return {
-		html: def,
-	};
-}
 
 function saveSession(session) {
 	if (session && session.save) {
@@ -317,7 +302,6 @@ function init(app, componentsDir, options) {
 }
 
 module.exports = {
-	routeless,
 	use,
 	get,
 	post,
