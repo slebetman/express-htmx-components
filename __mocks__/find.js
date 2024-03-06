@@ -10,8 +10,9 @@ mockFindObject = {
 
 module.exports = {
 	eachfile: (pattern, path, cb) => {
-		cb("./testing1.js");
-		cb("./testing2.js");
+		if (path) {
+			cb(path);
+		}
 		return mockFindObject;
 	},
 };

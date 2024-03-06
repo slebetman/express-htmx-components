@@ -25,6 +25,23 @@ test("GET component should return a html and a router", async () => {
 	expect(response.text).toMatch(/hello world/);
 });
 
+test("Components should handle path params", async () => {
+	const app = express();
+
+	const get = component.get("/test/:hello", ({ hello }) => {
+		return `<div>hello ${hello}</div>`;
+	});
+
+	app.use(get.route);
+	app.use(errorHandler);
+
+	expect(get.html({ hello: 'world' })).toBe("<div>hello world</div>");
+
+	const response = await request(app).get("/test/world").expect(200);
+
+	expect(response.text).toMatch(/hello world/);
+});
+
 test("Sessions should work", async () => {
 	const app = express();
 
@@ -193,7 +210,7 @@ test("DEL component should accept a delete request", async () => {
 	expect(jsonResponse.text).toMatch(/hello world/);
 });
 
-test("Routerless component should only have html", () => {
+test("Routeless component should only have html", () => {
 	const comp = component.routeless(({ hello }) => {
 		return `<div>hello ${hello}</div>`;
 	});
