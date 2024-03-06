@@ -251,3 +251,22 @@ test("INIT should throw error if js is invalid", async () => {
 
 	expect(() => component.init(app, null, { js: [{}] })).toThrow();
 })
+
+test("INIT should ignore components without routes", async () => {
+	const component = require("../main");
+	const app = express();
+
+	const comp = component.routeless(() => {
+		return 'hello world'
+	})
+
+	jest.mock(
+		"../testing.js",
+		() => {
+			return comp;
+		},
+		{ virtual: true }
+	);
+
+	await component.init(app, "./testing.js");
+})

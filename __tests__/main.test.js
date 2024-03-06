@@ -2,9 +2,12 @@ const request = require("supertest");
 const component = require("../main");
 const express = require("express");
 const fileUpload = require("express-fileupload");
+const multer = require("multer");
 
 const errorHandler = (err, req, res, next) => {
-	console.log(err.message, err.stack);
+	if (err?.message) {
+		console.log(err.message, err.stack);
+	}
 	res.status(500);
 	res.send(err.message);
 };
@@ -289,4 +292,81 @@ test("Should support file uploads using express-fileupload", async () => {
 
 	expect(response.text).toMatch(/NAME = hello\.txt/);
 	expect(response.text).toMatch(/DATA = hello file/);
+});
+
+test("Should support file uploads using multer", async () => {
+	const app = express();
+
+	const storage = multer.memoryStorage();
+	const upload = multer({ storage });
+
+	const dummyFile = Buffer.from('hello file');
+
+	const post = component.post("/test", ({ files }) => {
+		return `
+			<div>NAME = ${files[0].originalname}</div>
+			<div>DATA = ${files[0].buffer.toString('utf8')}</div>
+			<div>FIELD = ${files[0].fieldname}</div>
+		`;
+	});
+
+	app.use(upload.array('foo'));
+	app.use(post.route);
+	app.use(errorHandler);
+
+	const response = await request(app)
+		.post("/test")
+		.attach('foo', dummyFile, 'hello.txt')
+		.expect(200);
+
+	expect(response.text).toMatch(/NAME = hello\.txt/);
+	expect(response.text).toMatch(/DATA = hello file/);
+	expect(response.text).toMatch(/FIELD = foo/);
+});
+
+test("Should handle session save errors", async () => {
+	const app = express();
+
+	const get = component.get("/test", async ({}, { redirect }) => {
+		await redirect("/goodbye");
+		return;
+	});
+
+	const fakeSession = {
+		save: (fn) => fn('HA!'),
+	};
+
+	app.use((req, res, next) => {
+		req.session = fakeSession;
+		next();
+	});
+	app.use(get.route);
+	app.use(errorHandler);
+
+	await request(app).get("/test");
+});
+
+test("Should work without session object", async () => {
+	const app = express();
+
+	const get = component.get("/test", async ({}, { redirect }) => {
+		await redirect("/goodbye");
+		return;
+	});
+
+	app.use(get.route);
+	app.use(errorHandler);
+
+	await request(app).get("/test");
+});
+
+test("When used as component set, get and redirect should do nothing", async () => {
+	const get = component.get("/test", async (_, { set, get, redirect }) => {
+		set('Hello','world');
+		get('x-hello-world');
+		await redirect("/goodbye");
+		return 'got here';
+	});
+
+	expect(await get.html()).toBe('got here');
 });
