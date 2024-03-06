@@ -187,8 +187,6 @@ function del(path, ...fn) {
 	return makeComponent('delete', path, ...fn);
 }
 
-
-
 /**
  * @param {core.Router} app
  * @param {string} componentsDir
