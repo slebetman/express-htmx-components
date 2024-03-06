@@ -1,7 +1,12 @@
 const find = require('find');
 const express = require('express');
+const core = require('express-serve-static-core');
 
 let headContent = '';
+
+/**
+ * @type {SrcObject}
+ */
 let htmxToInclude = {
 	src: "https://unpkg.com/htmx.org@1.9.9/dist/htmx.min.js",
 	integrity: "sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX",
@@ -19,13 +24,35 @@ ${headContent}
 }
 
 /**
+ * @typedef {Object} SrcObject
+ * @property {string} src
+ * @property {string} [integrity]
+ * @property {string} [crossorigin]
+ */
+
+/**
+ * @typedef {Object} HrefObject
+ * @property {string} href
+ * @property {string} [integrity]
+ * @property {string} [crossorigin]
+ */
+
+/**
+ * @typedef {SrcObject | string} SrcUrl
+ */
+
+/**
+ * @typedef {HrefObject | string} HrefUrl
+ */
+
+/**
  * @callback ComponentFunction
  * @param {Object} props
  */
 
 /**
  * @typedef {Object} Component
- * @property {express.Router} route
+ * @property {core.Router} route
  * @property {ComponentFunction} html
  */
 
@@ -178,16 +205,19 @@ function del(path, ...fn) {
 
 
 /**
- * @param {express.Router} app
+ * @param {core.Router} app
  * @param {string} componentsDir
  * @param {Object} [options]
- * @param {string[]} options.css - list of css to include
- * @param {string[]} options.js - list of javascript to include
- * @param {string} options.htmx - the htmx library to include
- * @param {string} options.favicon - favicon
+ * @param {HrefUrl[]} options.css - list of css to include
+ * @param {SrcUrl[]} options.js - list of javascript to include
+ * @param {SrcUrl} options.htmx - the htmx library to include
+ * @param {HrefUrl} options.favicon - favicon
  * @param {Object[]} options.link - generic link tag
 */
 function init(app, componentsDir, options) {
+	/**
+	 * @type {SrcUrl[]}
+	 */
 	let jsToInclude = [htmxToInclude];
 
 	if (options) {
@@ -282,7 +312,7 @@ function init(app, componentsDir, options) {
 			}
 		})
 		.error(fail)
-		.end(ok);
+		.end(() => ok);
 	});
 }
 
