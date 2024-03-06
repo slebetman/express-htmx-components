@@ -5,7 +5,8 @@
   "homepage": "https://slebetman.github.io/express-htmx-components/",
   "main": "main.js",
   "scripts": {
-    "test": "jest --verbose"
+    "test": "jest --verbose",
+    "tdd": "nodemon --ext 'js' --exec 'npx jest $UNIT_UNDER_TEST'"
   },
   "dependencies": {
     "find": "^0.3.0"
@@ -22,6 +23,7 @@
   "devDependencies": {
     "jest": "^29.7.0",
     "markdown-styles": "^3.2.0",
+    "nodemon": "^3.1.0",
     "supertest": "^6.3.4"
   },
   "jest": {
