@@ -1,6 +1,7 @@
 const request = require("supertest");
 const component = require("../main");
 const express = require("express");
+const fileUpload = require("express-fileupload");
 
 const errorHandler = (err, req, res, next) => {
 	console.log(err.message, err.stack);
@@ -263,4 +264,29 @@ test("Allow setting and getting headers", async () => {
 		.expect(200);
 
 	expect(response.text).toMatch(/hello world/);
+});
+
+test("Should support file uploads using express-fileupload", async () => {
+	const app = express();
+
+	const dummyFile = Buffer.from('hello file');
+
+	const post = component.post("/test", ({ files }) => {
+		return `
+			<div>NAME = ${files.foo.name}</div>
+			<div>DATA = ${files.foo.data.toString('utf8')}</div>
+		`;
+	});
+
+	app.use(fileUpload());
+	app.use(post.route);
+	app.use(errorHandler);
+
+	const response = await request(app)
+		.post("/test")
+		.attach('foo', dummyFile, 'hello.txt')
+		.expect(200);
+
+	expect(response.text).toMatch(/NAME = hello\.txt/);
+	expect(response.text).toMatch(/DATA = hello file/);
 });
