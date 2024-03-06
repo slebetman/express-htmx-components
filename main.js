@@ -218,7 +218,7 @@ function init(app, componentsDir, options) {
 	/**
 	 * @type {SrcUrl[]}
 	 */
-	let jsToInclude = [htmxToInclude];
+	let jsToInclude = [];
 
 	if (options) {
 		if (!options.js) {
