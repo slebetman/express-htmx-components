@@ -324,7 +324,7 @@ test("Should support file uploads using multer", async () => {
 	expect(response.text).toMatch(/FIELD = foo/);
 });
 
-test("Should handle session save errors", async () => {
+test("Redirect should handle session save errors", async () => {
 	const app = express();
 
 	const get = component.get("/test", async ({}, { redirect }) => {
@@ -346,7 +346,7 @@ test("Should handle session save errors", async () => {
 	await request(app).get("/test");
 });
 
-test("Should work without session object", async () => {
+test("Redirect should work without session object", async () => {
 	const app = express();
 
 	const get = component.get("/test", async ({}, { redirect }) => {
