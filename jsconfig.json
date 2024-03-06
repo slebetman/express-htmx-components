@@ -2,5 +2,10 @@
   "compilerOptions": {
     "checkJs": true
   },
-  "exclude": ["node_modules", "__tests__", "__mocks__","coverage"]
+  "exclude": [
+    "node_modules",
+    "__tests__",
+    "__mocks__",
+    "coverage"
+  ]
 }

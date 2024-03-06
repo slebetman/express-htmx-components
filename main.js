@@ -312,7 +312,7 @@ function init(app, componentsDir, options) {
 			}
 		})
 		.error(fail)
-		.end(() => ok);
+		.end(() => ok());
 	});
 }
 
