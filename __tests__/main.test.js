@@ -300,7 +300,7 @@ test("Should support file uploads using multer", async () => {
 		`;
 	});
 
-	app.use(upload.array('foo'));
+	app.use(upload.single('foo'));
 	app.use(post.route);
 	app.use(errorHandler);
 
@@ -312,6 +312,44 @@ test("Should support file uploads using multer", async () => {
 	expect(response.text).toMatch(/NAME = hello\.txt/);
 	expect(response.text).toMatch(/DATA = hello file/);
 	expect(response.text).toMatch(/FIELD = foo/);
+});
+
+test("Should support multiple file uploads using multer", async () => {
+	const app = express();
+
+	const storage = multer.memoryStorage();
+	const upload = multer({ storage });
+
+	const dummyFile = Buffer.from('hello file1');
+	const dummyFile2 = Buffer.from('hello file2');
+
+	const post = component.post("/test", ({ files }) => {
+		return `
+			<div>NAME1 = ${files[0].originalname}</div>
+			<div>DATA1 = ${files[0].buffer.toString('utf8')}</div>
+			<div>FIELD1 = ${files[0].fieldname}</div>
+			<div>NAME2 = ${files[1].originalname}</div>
+			<div>DATA2 = ${files[1].buffer.toString('utf8')}</div>
+			<div>FIELD2 = ${files[1].fieldname}</div>
+		`;
+	});
+
+	app.use(upload.array('foo'));
+	app.use(post.route);
+	app.use(errorHandler);
+
+	const response = await request(app)
+		.post("/test")
+		.attach('foo', dummyFile, 'hello1.txt')
+		.attach('foo', dummyFile2, 'hello2.txt')
+		.expect(200);
+
+	expect(response.text).toMatch(/NAME1 = hello1\.txt/);
+	expect(response.text).toMatch(/DATA1 = hello file1/);
+	expect(response.text).toMatch(/FIELD1 = foo/);
+	expect(response.text).toMatch(/NAME2 = hello2\.txt/);
+	expect(response.text).toMatch(/DATA2 = hello file2/);
+	expect(response.text).toMatch(/FIELD2 = foo/);
 });
 
 test("Redirect should handle session save errors", async () => {

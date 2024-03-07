@@ -92,9 +92,18 @@ function makeComponent(method, path, ...fn) {
 			...req.params,
 			...req.query,
 		};
+		
+		let files = null;
 
 		if (req.files) {
-			props.files = req.files;
+			files = req.files;
+		}
+		if (req.file) {
+			files = [ req.file ];
+		}
+		
+		if (files) {
+			props.files = files;
 		}
 
 		const hx = {
