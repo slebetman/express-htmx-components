@@ -266,6 +266,46 @@ const testingPost = component.post("/testing", ({ n }) => {
 Accessing `http://localhost:8888/testing` will call the `testingGet` component
 but submitting the form will call the `testingPost` component.
 
+#### File uploads
+
+A `files` prop is passed to the component if you use a `multipart/form-data` middleware
+that can handle file uploads and set either the `req.file` or `req.files` property.
+
+Currently, express-htmx-components support [multer](https://www.npmjs.com/package/multer)
+and [express-fileupload](https://www.npmjs.com/package/express-fileupload).
+
+#### Multer
+
+To handle file uploads using **multer**'s `upload.single()` or `upload.array()`:
+
+```js
+const myComponent = component.post("/test", ({ files }) => {
+  return `
+    <div>NAME = ${files[0].originalname}</div>
+    <div>DATA = ${files[0].buffer.toString('utf8')}</div>
+  `;
+});
+```
+
+With both `single()` and `array()` express-htmx-components will pass the file or files
+into the `files` array.
+
+#### Express-fileupload
+
+To handle file uploads using **express-fileupload**:
+
+```js
+const post = component.post("/test", ({ files }) => {
+  return `
+    <div>NAME = ${files.foo.name}</div>
+    <div>DATA = ${files.foo.data.toString('utf8')}</div>
+  `;
+});
+```
+
+Unlike multer, express-fileupload passes an object of files. The keys of the object are
+the form's input name (eg. `<input type="file" name="foo">`).
+
 ### component.put( )
 
 ```js
