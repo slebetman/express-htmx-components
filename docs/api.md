@@ -316,7 +316,7 @@ To handle file uploads using **express-fileupload**:
 const post = component.post("/test",
   fileUpload(),
   ({ files }) => {
-    return `
+    return html`
       <div>NAME = ${files.foo.name}</div>
       <div>DATA = ${files.foo.data.toString('utf8')}</div>
     `;
