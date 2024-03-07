@@ -266,7 +266,7 @@ function init(app, componentsDir, options) {
 						return `<link rel="stylesheet" ${params.join(' ')}"></link>`
 					}
 					else {
-						throw new Error(`Invalid js specification: ${href}`)
+						throw new Error(`Invalid css specification: ${href}`)
 					}
 				})
 				.join('\n');
