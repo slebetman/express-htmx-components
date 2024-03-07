@@ -279,12 +279,30 @@ and [express-fileupload](https://www.npmjs.com/package/express-fileupload).
 To handle file uploads using **multer**'s `upload.single()` or `upload.array()`:
 
 ```js
-const myComponent = component.post("/test", ({ files }) => {
-  return `
-    <div>NAME = ${files[0].originalname}</div>
-    <div>DATA = ${files[0].buffer.toString('utf8')}</div>
-  `;
-});
+const myComponent = component.post("/test-single",
+  upload.single('foo'),
+  ({ files }) => {
+    return html`
+      <div>NAME = ${files[0].originalname}</div>
+      <div>DATA = ${files[0].buffer.toString('utf8')}</div>
+    `;
+  }
+);
+
+const ourComponent = component.post("/test-multiple",
+  upload.array('foo'),
+  ({ files }) => {
+    return html`
+      $${files.map((f, idx) => {
+        html`
+          <div>
+            <div>NAME${idx} = ${f.originalname}</div>
+            <div>DATA${idx} = ${f.buffer.toString('utf8')}</div>
+          </div>`;
+      }).join('')}
+    `;
+  }
+);
 ```
 
 With both `single()` and `array()` express-htmx-components will pass the file or files
@@ -295,12 +313,15 @@ into the `files` array.
 To handle file uploads using **express-fileupload**:
 
 ```js
-const post = component.post("/test", ({ files }) => {
-  return `
-    <div>NAME = ${files.foo.name}</div>
-    <div>DATA = ${files.foo.data.toString('utf8')}</div>
-  `;
-});
+const post = component.post("/test",
+  fileUpload(),
+  ({ files }) => {
+    return `
+      <div>NAME = ${files.foo.name}</div>
+      <div>DATA = ${files.foo.data.toString('utf8')}</div>
+    `;
+  }
+);
 ```
 
 Unlike multer, express-fileupload passes an object of files. The keys of the object are
