@@ -11,3 +11,5 @@ sample.db
 test-server.js
 components
 coverage
+*.d.ts
+*.d.ts.map
