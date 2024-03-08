@@ -8,7 +8,7 @@
     "test": "jest --verbose",
     "tdd": "nodemon --ext 'js' --exec 'npx jest $UNIT_UNDER_TEST'",
     "typecheck": "tsc -p tsconfig.json",
-    "build": "npm run typecheck"
+    "postinstall": "npm run typecheck"
   },
   "dependencies": {
     "express-serve-static-core": "^0.1.1",
