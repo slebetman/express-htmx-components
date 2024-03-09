@@ -79,6 +79,29 @@ test("INIT should automatically install htmx library", async () => {
 	expect(response.text).toMatch(/src=\S+unpkg\S+htmx\.min\.js/);
 })
 
+test("INIT should not include htmx twice", async () => {
+	const component = require("../main");
+	const app = express();
+
+	const comp = component.get('/testing',() => {
+		return 'hello world'
+	})
+
+	jest.mock(
+		"../testing.js",
+		() => {
+			return comp;
+		},
+		{ virtual: true }
+	);
+
+	await component.init(app, "./testing.js", {});
+
+	const response = await request(app).get("/testing").expect(200);
+
+	expect(response.text).not.toMatch(/src=\S+unpkg\S+htmx\.min\.js.+src=\S+unpkg\S+htmx\.min\.js/);
+})
+
 test("INIT should allow user to override htmx library", async () => {
 	const component = require("../main");
 	const app = express();
