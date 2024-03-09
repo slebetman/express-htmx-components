@@ -99,6 +99,7 @@ test("INIT should not include htmx twice", async () => {
 
 	const response = await request(app).get("/testing").expect(200);
 
+	expect(response.text).toMatch(/src=\S+unpkg\S+htmx\.min\.js/);
 	expect(response.text).not.toMatch(/src=\S+unpkg\S+htmx\.min\.js.+src=\S+unpkg\S+htmx\.min\.js/);
 })
 
