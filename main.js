@@ -205,7 +205,7 @@ function del(path, ...fn) {
  * @param {SrcUrl} options.htmx - the htmx library to include
  * @param {HrefUrl} options.favicon - favicon
  * @param {Object[]} options.link - generic link tag
-*/
+ */
 function init(app, componentsDir, options) {
 	/**
 	 * @type {SrcUrl[]}
